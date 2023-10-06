@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package rust_reel;
+
+message RustReelRequest {
+  string name = 1;
+}
+
+message RustReelResponse {
+    string message = 1;
+}
+
+service RustReelService {
+    rpc Test(RustReelRequest) returns (RustReelResponse);
+}
