@@ -18,7 +18,8 @@
     "vue-facing-decorator": "^3.0.3",
     "vue-router": "4",
     "vue-toastification": "next",
-    "vuex": "next"
+    "vuex": "next",
+    "wasm-pack": "^0.12.1"
   },
   "devDependencies": {
     "@types/node": "^20.6.0",
