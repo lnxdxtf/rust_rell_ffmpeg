@@ -23,9 +23,9 @@
             
         - name: Clean target branch
           run: |
-          git checkout app/dist-ghpages
-          git reset --hard origin/app/dist-ghpages
-          git clean -f -d
+            git checkout app/dist-ghpages
+            git reset --hard origin/app/dist-ghpages
+            git clean -f -d
 
         - name: Copy dist folder to target branch
           run: |
