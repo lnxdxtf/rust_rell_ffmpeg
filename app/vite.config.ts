@@ -5,7 +5,7 @@ import * as path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
+  base: '/rust_reel-grpc/',
   build: { minify: false },
   plugins: [vue(), wasmPack(['./wasm-app'])],
   envPrefix: ['VITE_'],
