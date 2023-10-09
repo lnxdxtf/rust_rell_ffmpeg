@@ -1,30 +1,24 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <div class="w-screen h-screen bg-gradient-to-tr from-bg-1 to-bg-2 flex overflow-hidden hidden-scroll">
+      <SideBar class="w-fit h-full" />
+      <div class="w-full h-full block">
+        <TopBar />
+        <router-view v-slot="{ Component }">
+          <component :is="Component" class="w-full h-[95vh] animate__animated animate__fadeIn overflow-y-auto" />
+        </router-view>
+      </div>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<script lang="ts">
+import { Component, Vue, toNative } from 'vue-facing-decorator';
+import SideBar from './components/SideBar.vue';
+import TopBar from './components/TopBar.vue';
+@Component({
+  components: { SideBar, TopBar }
+})
+class App extends Vue { }
+export default toNative(App);
+</script>
