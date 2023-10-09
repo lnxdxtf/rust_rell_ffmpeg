@@ -20,20 +20,15 @@
             bun install
             bun run wasm
             bun run build
-            
-        - name: Clean target branch
-          run: |
-            git checkout ghpages
-            git reset --hard origin/ghpages
-            git clean -f -d
-
-        - name: Copy dist folder to target branch
-          run: |
-            git checkout ghpages
-            cp -r /app/dist/* .
-
-        - name: Commit changes and push to target branch
-          run: |
-            git add .
-            git commit -m "Deploy dist folder"
-            git push origin ghpages
+        
+        - name: Setup Pages
+          uses: actions/configure-pages@v3
+        - name: Upload artifact
+          uses: actions/upload-pages-artifact@v1
+          with:
+            # Upload dist repository
+            path: '.app/dist'
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v1
+        
