@@ -9,27 +9,23 @@ export default class PreProcessFFMPEG implements PreProcessCommand {
 
     constructor() {
         this.ffmpeg = new FFmpeg()
-        if (import.meta.env.VITE_PREPROCESS_LOG) {
-            this.ffmpeg.on('log', ({ message: msg, type: tp }: any) => {
-                const logElement = document.getElementById("log-video")
-                if (logElement) {
-                    logElement.textContent += `[${tp}] ${msg}\n`
-                    logElement.parentElement!.scrollTop = logElement.parentElement!.scrollHeight;
-                }
-            })
-        }
-        if (import.meta.env.VITE_PREPROCESS_PROGRESS) {
-            this.ffmpeg.on("progress", ({ progress: progress, time: _ }: any) => {
-                const progressElement_width = document.getElementById("progress-width")
-                const progressElement_percent = document.getElementById("progress-percent")
-                if (progressElement_width) {
-                    progressElement_width.style.width = `${progress * 100}%`
-                }
-                if (progressElement_percent) {
-                    progressElement_percent.textContent = `${progress.toFixed(1) * 100}%`
-                }
-            })
-        }
+        this.ffmpeg.on('log', ({ message: msg, type: tp }: any) => {
+            const logElement = document.getElementById("log-video")
+            if (logElement) {
+                logElement.textContent += `[${tp}] ${msg}\n`
+                logElement.parentElement!.scrollTop = logElement.parentElement!.scrollHeight;
+            }
+        })
+        this.ffmpeg.on("progress", ({ progress: progress, time: _ }: any) => {
+            const progressElement_width = document.getElementById("progress-width")
+            const progressElement_percent = document.getElementById("progress-percent")
+            if (progressElement_width) {
+                progressElement_width.style.width = `${progress * 100}%`
+            }
+            if (progressElement_percent) {
+                progressElement_percent.textContent = `${progress.toFixed(1) * 100}%`
+            }
+        })
     }
 
     private async load() {
