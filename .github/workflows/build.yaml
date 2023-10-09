@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Set up Git
+        run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
       - uses: oven-sh/setup-bun@v1
       
       - name: Install dependencies and build
@@ -25,12 +29,12 @@ jobs:
           git config user.name "lnxdxtf-action"
           git config user.email "gabrielramosmichaliszen@gmail.com"
           git fetch
-          git checkout app/dist || git checkout -b app/dist
+          git checkout app/dist-ghpages || git checkout -b app/dist-ghpages
           git reset --hard origin/main
           git rm -rf .
-          git commit -m "Clean app/dist" || echo "No changes to commit"
-          git push origin app/dist
+          git commit -m "Clean app/dist-ghpages" || echo "No changes to commit"
+          git push origin app/dist-ghpages
           cp -r ./app/dist/* .  
           git add .
           git commit -m "Deploying dist folder"
-          git push -u origin app/dist
+          git push -u origin app/dist-ghpages
