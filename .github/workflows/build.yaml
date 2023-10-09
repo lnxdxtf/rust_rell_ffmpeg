@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: oven-sh/setup-bun@v1
+
       - name: Install dependencies and build
       - run: |
           sudo apt-get install protobuf-compiler
@@ -20,7 +21,7 @@ jobs:
           bun run build
 
       - name: Clean and deploy to another branch
-      - run: |
+        run: |
           git config user.name "lnxdxtf-action"
           git config user.email "gabrielramosmichaliszen@gmail.com"
 
