@@ -23,17 +23,17 @@
             
         - name: Clean target branch
           run: |
-            git checkout app/dist-ghpages
-            git reset --hard origin/app/dist-ghpages
+            git checkout ghpages
+            git reset --hard origin/ghpages
             git clean -f -d
 
         - name: Copy dist folder to target branch
           run: |
-            git checkout app/dist-ghpages
+            git checkout ghpages
             cp -r /app/dist/* .
 
         - name: Commit changes and push to target branch
           run: |
             git add .
             git commit -m "Deploy dist folder"
-            git push origin app/dist-ghpages
+            git push origin ghpages
