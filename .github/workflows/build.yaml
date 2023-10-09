@@ -11,9 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: oven-sh/setup-bun@v1
-
+      
       - name: Install dependencies and build
-      - run: |
+        run: |
           sudo apt-get install protobuf-compiler
           cd ./app
           bun install
@@ -24,18 +24,13 @@ jobs:
         run: |
           git config user.name "lnxdxtf-action"
           git config user.email "gabrielramosmichaliszen@gmail.com"
-
-          # Checkout the target branch, create it if it doesn't exist yet
           git fetch
           git checkout app/dist || git checkout -b app/dist
-          git reset --hard origin/main  # Reset to the state of main (or another branch you want)
-          git rm -rf .  # Remove all old files
+          git reset --hard origin/main
+          git rm -rf .
           git commit -m "Clean app/dist" || echo "No changes to commit"
           git push origin app/dist
-
-          # Copy dist folder content to root directory
           cp -r ./app/dist/* .  
-          
           git add .
           git commit -m "Deploying dist folder"
           git push -u origin app/dist
