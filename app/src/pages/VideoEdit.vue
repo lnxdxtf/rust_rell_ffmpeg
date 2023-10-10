@@ -8,27 +8,71 @@
                         <input id="video-input" type="file"
                             class="block w-full px-3 py-2 mt-2 text-sm border border-main-2 rounded-lg file:text-sm file:text-white file:px-4 file:py-1 file:border-none file:rounded-full file:bg-main-2 file:bg-opacity-20   text-white" />
                     </div>
+
+                    <ToolBarVideoEdit @video_editing_action="video_editing_action_handler" :edit_selected="edit_selected" />
+
+                    <template v-if="edit_selected == 'water-mark'">
+                        <div>
+                            <div class="w-fit">
+                                <label for="video-water-mark-input" class="block text-sm text-white">Water Mark Image(.png)
+                                    with background transparent</label>
+                                <input id="video-water-mark-input" type="file"
+                                    class="block w-full px-3 py-2 mt-2 text-sm border border-main-2 rounded-lg file:text-sm file:text-white file:px-4 file:py-1 file:border-none file:rounded-full file:bg-main-2 file:bg-opacity-20 text-white" />
+                            </div>
+                        </div>
+                    </template>
+                    <template v-else-if="edit_selected == 'filter'">
+                        <div>
+                            filter
+                        </div>
+                    </template>
+                    <template v-else-if="edit_selected == 'compress'">
+                        <div>
+                            compress
+                        </div>
+                    </template>
+
+                    <div v-if="!data_output"
+                        class="flex items-center justify-center px-4 py-2 font-bold text-white rounded-md"
+                        @click="data_input.file && !loading ? start_preprocess() : null"
+                        :class="{ 'bg-green-600 cursor-pointer': data_input.file && !loading, 'bg-amber-600 cursor-not-allowed': !data_input.file || loading || !data_input.file && loading }">
+                        {{ !data_input.file ? 'Choose a Video Input' : 'Start' }}
+                    </div>
+                    <div v-else
+                        class="flex items-center justify-center px-4 py-2 font-bold text-white rounded-md bg-gray-500 cursor-pointer"
+                        @click="data_output = null">
+                        Clear
+                    </div>
+
                     <div class="w-full flex gap-4">
                         <div class="w-full flex flex-col gap-4 items-center p-6 rounded-md bg-black bg-opacity-50">
                             <span class="text-xl font-bold text-white">Input Video</span>
                             <VideoView class="w-[480px] h-[240px]"
-                                :video_data="{ ref_id: `${random_id}-input`, src: video_input }" />
+                                :video_data="{ ref_id: `${random_id}-input`, src: data_input.file }" />
                         </div>
                         <div class="w-full flex flex-col gap-4 items-center p-6 rounded-md bg-black bg-opacity-50">
                             <span class="text-xl font-bold text-white">Output Video</span>
-                            <Loader v-if="loading && !video_output" />
+                            <Loader v-if="loading && !data_output" />
+
                             <div v-else>
-                                <VideoView v-if="video_output" class="w-[480px] h-[240px]"
-                                    :video_data="{ ref_id: `${random_id}-output`, src: video_output }" />
+                                <VideoView v-if="data_output" class="w-[480px] h-[240px]"
+                                    :video_data="{ ref_id: `${random_id}-output`, src: data_output.video.url }" />
                                 <div class="w-full flex justify-center p-4 items-center">
-                                    <a v-if="video_output" :href="video_output" download="video_output.mp4"
-                                        class="cursor-pointer px-4 py-2 rounded-md bg-green-600 text-white font-bold">Download</a>
+                                    <a v-if="data_output?.video?.url" :href="data_output?.video?.url"
+                                        :download="`video_output.${data_output.video.ext.split('/')[1]}`"
+                                        class="cursor-pointer px-4 py-2 rounded-md bg-green-600 text-white font-bold">Download
+                                        Video {{ }}</a>
+                                    <template v-if="edit_selected == 'audio-extract'">
+                                        <div>
+                                            <a v-if="audio_output" class=""></a>
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
-                    <div class="px-4 rounded-md py-2  w-fit bg-red-500 text-white" @click="start_preprocess">TESTE</div>
                     <Progress v-if="loading" />
                     <div class="w-full h-full flex flex-col gap-4 items-center text-white">
                         <span>LOG</span>
@@ -36,11 +80,13 @@
                             <div id="log-video" class="w-[300px] text-xs"></div>    
                         </pre>
                     </div>
+
                 </div>
             </div>
         </Pattern>
     </div>
 </template>
+
 <script lang="ts">
 import { Component, toNative, Vue } from 'vue-facing-decorator';
 import VideoEditMixin from '../app/modules/video/video_edit_mixin'
@@ -48,10 +94,11 @@ import Pattern from './Pattern.vue';
 import VideoView from '../components/VideoEdit/VideoView.vue';
 import Loader from '../components/Loader.vue';
 import Progress from '../components/Progress.vue'
+import ToolBarVideoEdit from '../components/VideoEdit/ToolBarVideoEdit.vue';
 
 @Component({
     mixins: [VideoEditMixin],
-    components: { Pattern, VideoView, Loader, Progress }
+    components: { Pattern, VideoView, Loader, Progress, ToolBarVideoEdit }
 })
 class VideoEdit extends Vue {
 

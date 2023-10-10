@@ -13,7 +13,7 @@ export default {
           2: "#293052"
         },
         main: {
-          1: "",
+          1: "#fca311",
           2: "#7175fe",
           3: "#9c9ee9",
         }
@@ -21,6 +21,6 @@ export default {
     },
   },
   plugins: [
-
+    require("daisyui")
   ],
 }

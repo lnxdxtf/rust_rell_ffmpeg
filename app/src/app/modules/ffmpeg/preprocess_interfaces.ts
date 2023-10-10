@@ -1,23 +1,39 @@
-export interface PreProcessInput {
-    file_id_input: string
-    file_ext_input: string
-    file_data_input: any | Blob
-    file_id_output?: string
-    file_ext_output: string
+// interface DataInputVideoOpts {
+//     codec?: string
+//     bitrate?: string
+//     resolution?: string
+//     framerate?: string
+// }
+// interface DataInputAudioOpts {
+//     codec?: string
+//     bitrate?: string
+//     samplerate?: string
+//     channels?: string
+// }
+
+export interface DataInput {
+    id: string
+    file: string | Blob | File | undefined // string == url or base64
+    type: string
+    // opts_video?: DataInputVideoOpts
+    // opts_audio?: DataInputAudioOpts
 }
-export interface PreProcessOutput {
+
+
+export interface DataOutput {
     blob: Blob,
     url?: string
     ext: string
 }
 
-export interface PreProcessOutputWrapper {
-    video?: PreProcessOutput
-    image?: PreProcessOutput
-    audio?: PreProcessOutput
+export interface DataOutputWrapper {
+    video?: DataOutput
+    image?: DataOutput
+    audio?: DataOutput
 }
 
 export interface PreProcessCommand {
-    split_video_audio(data: PreProcessInput): Promise<PreProcessOutputWrapper>
-    mute_video(data: PreProcessInput): Promise<PreProcessOutputWrapper>
+    split_video_audio(data: DataInput): Promise<DataOutputWrapper>
+    mute_video(data: DataInput): Promise<DataOutputWrapper>
+    watermark_video(data: DataInput, watermark: DataInput): Promise<DataOutputWrapper>
 }

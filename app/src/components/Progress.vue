@@ -7,7 +7,7 @@
             <span class="absolute inset-0 flex items-center justify-center text-[10px]/4">
                 <span id="progress-percent" class="font-bold text-white"></span>            </span>
 
-            <span id="progress-width" class="block h-4 rounded-full bg-indigo-600 text-center" style="width: 75%">
+            <span id="progress-width" class="block h-4 rounded-full bg-main-1 text-center" style="width: 0%">
             </span>
         </span>
     </div>

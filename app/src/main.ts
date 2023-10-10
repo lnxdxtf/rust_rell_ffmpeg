@@ -6,6 +6,7 @@ import store from './app/store/store'
 import "vue-toastification/dist/index.css";
 import Toast, { POSITION } from "vue-toastification";
 
+
 function main() {
     const app: App<Element> = createApp(AppComponent)
     settings(app)
