@@ -5,7 +5,7 @@ import * as path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base: '/rust_reel-grpc/',
+  base: '/rust_reel-grpc/',
   build: { minify: false },
   plugins: [vue(), wasmPack(['./wasm-app'])],
   envPrefix: ['VITE_'],
@@ -15,5 +15,5 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util']
   },
-  
+
 })
