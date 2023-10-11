@@ -3,7 +3,6 @@ import { fetchFile } from '@ffmpeg/util';
 import ffmpegCoreUrl from '../../../../node_modules/@ffmpeg/core/dist/esm/ffmpeg-core?url'
 import ffmpegwasmUrl from '../../../../node_modules/@ffmpeg/core/dist/esm/ffmpeg-core.wasm?url'
 import { PreProcessCommand, DataOutput, DataOutputWrapper, DataInput } from "./preprocess_interfaces";
-import notification from "../notification";
 
 export default class PreProcessFFMPEG implements PreProcessCommand {
     ffmpeg?: FFmpeg
@@ -28,6 +27,7 @@ export default class PreProcessFFMPEG implements PreProcessCommand {
             }
         })
     }
+
 
     private async load() {
         await this.ffmpeg?.load({
@@ -105,5 +105,10 @@ export default class PreProcessFFMPEG implements PreProcessCommand {
         const result = await this.get_preprocessed(file_output, data.type)
         this.ffmpeg!.terminate
         return { video: result }
+    }
+
+    public async compress_video(_data: DataInput): Promise<DataOutputWrapper | Error> {
+        // todo!()
+        return { video: undefined }
     }
 }
