@@ -33,7 +33,9 @@ export interface DataOutputWrapper {
 }
 
 export interface PreProcessCommand {
-    split_video_audio(data: DataInput): Promise<DataOutputWrapper>
-    mute_video(data: DataInput): Promise<DataOutputWrapper>
-    watermark_video(data: DataInput, watermark: DataInput): Promise<DataOutputWrapper>
+    split_video_audio(data: DataInput): Promise<DataOutputWrapper | Error>
+    mute_video(data: DataInput): Promise<DataOutputWrapper | Error>
+    watermark_video(data: DataInput, watermark: DataInput): Promise<DataOutputWrapper | Error>
+    filter_video(data: DataInput, filter: string): Promise<DataOutputWrapper | Error>
+    compress_video(data: DataInput): Promise<DataOutputWrapper | Error>
 }

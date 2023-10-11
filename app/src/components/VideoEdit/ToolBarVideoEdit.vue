@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="flex overflow-hidden divide-x divide-main-2 rounded-lg flex-row-revers bg-black bg-opacity-50">
+        <div class="grid grid-cols-2 lg:flex overflow-hidden divide-x divide-main-2 rounded-lg flex-row-revers bg-black bg-opacity-50">
             <button @click="video_editing_action('extract-audio')"
                 :class="{'bg-main-2': edit_selected == 'extract-audio'}"
                 class="px-4 py-2 text-sm font-medium transition-colors duration-200 sm:text-base sm:px-6 text-white hover:bg-main-2">

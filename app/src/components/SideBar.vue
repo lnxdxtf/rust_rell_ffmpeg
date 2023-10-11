@@ -1,9 +1,13 @@
 <template>
     <div>
-
-        <aside
+        <div @click="show_menu = !show_menu"
+            class="lg:hidden flex m-4 p-4 rounded-md text-2xl absolute right-0 top-0 items-center justify-center text-white font-bold bg-main-1">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <aside v-if="show_menu"
             class="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto border-r border-main-3 border-opacity-50 text-white">
-            <a @click="$router.push('/')" class="w-full flex items-center cursor-pointer p-2 border text-3xl border-main-2">
+            <a @click="$router.push('/'), show_menu = false"
+                class="w-full flex items-center cursor-pointer p-2 border text-3xl border-main-2">
                 <!-- <img class="w-12" :src="img_logo"> -->
                 <i class="fa-brands fa-rust text-orange-700"></i>
                 <span style="font-family: 'VT323', monospace;">UST REEL</span>
@@ -15,7 +19,7 @@
                         <label class="px-3 text-xs uppercase text-gray-400">Tools</label>
 
                         <a v-for="toolRoute in routes.filter(r => r.category == 'tool')" :key="toolRoute.name"
-                            @click="$router.push(toolRoute.path)"
+                            @click="$router.push(toolRoute.path), show_menu = false"
                             class="cursor-pointer flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <i :class="toolRoute.icon"></i>
 
@@ -27,14 +31,14 @@
                     <div class="space-y-3 ">
                         <label class="px-3 text-xs uppercase text-gray-400">Services</label>
 
-                        <a @click="$router.push('/')"
+                        <a @click="$router.push('/'), show_menu = false"
                             class="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <i class="fa-solid fa-database"></i>
 
                             <span class="mx-2 text-sm font-medium">Midia Storage</span>
                         </a>
 
-                        <a @click="$router.push('/')"
+                        <a @click="$router.push('/'), show_menu = false"
                             class="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -45,7 +49,7 @@
                             <span class="mx-2 text-sm font-medium">Hotspots</span>
                         </a>
 
-                        <a @click="$router.push('/')"
+                        <a @click="$router.push('/'), show_menu = false"
                             class="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -60,7 +64,7 @@
                     <div class="space-y-3 ">
                         <label class="px-3 text-xs uppercase text-gray-400">Account</label>
 
-                        <a @click="$router.push('/')"
+                        <a @click="$router.push('/'), show_menu = false"
                             class="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -71,7 +75,7 @@
                             <span class="mx-2 text-sm font-medium">Login</span>
                         </a>
 
-                        <a @click="$router.push('/')"
+                        <a @click="$router.push('/'), show_menu = false"
                             class="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -94,14 +98,14 @@ import { Component, Vue, toNative } from 'vue-facing-decorator'
 import img_rust_reel from '../assets/imgs/rust-reel.jpeg'
 import routes from '../app/router/routes.json'
 import { RouteApp } from '../app/router/router'
+import store from '../app/store/store'
 @Component({})
 class SideBar extends Vue {
     img_logo = img_rust_reel
     routes: RouteApp[] = routes
-    $store: any
-
+    show_menu: boolean = !this.isMobile
     get isMobile() {
-        return this.$store.state.isMobile
+        return store.state.isMobile
     }
 
     mounted() {

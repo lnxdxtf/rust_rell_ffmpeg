@@ -14,18 +14,44 @@
                     <template v-if="edit_selected == 'water-mark'">
                         <div>
                             <div class="w-fit">
-                                <label for="video-water-mark-input" class="block text-sm text-white">Water Mark Image(.png)
+                                <label for="video-water-mark-input" class="block text-sm text-white">Water Mark
+                                    Image(.png)
                                     with background transparent</label>
                                 <input id="video-water-mark-input" type="file"
                                     class="block w-full px-3 py-2 mt-2 text-sm border border-main-2 rounded-lg file:text-sm file:text-white file:px-4 file:py-1 file:border-none file:rounded-full file:bg-main-2 file:bg-opacity-20 text-white" />
                             </div>
                         </div>
                     </template>
+
                     <template v-else-if="edit_selected == 'filter'">
                         <div>
-                            filter
+                            <div class="w-full grid grid-cols-4 items-center p-2 gap-4">
+
+                                <div @click="filter = 'hue=s=0'"
+                                    class="w-full p-4 text-center rounded-md bg-black bg-opacity-50 text-white font-bold text-xl hover:bg-main-2 transition-all duration-200 ease-in cursor-pointer">
+                                    Black & White
+                                </div>
+                                <div @click="filter = 'hue=h=60'"
+                                    class="w-full p-4 text-center rounded-md bg-black bg-opacity-50 text-white font-bold text-xl hover:bg-main-2 transition-all duration-200 ease-in cursor-pointer">
+                                    HUE ROTATE 60
+                                </div>
+                                <div @click="filter = 'curves=b=0.2'"
+                                    class="w-full p-4 text-center rounded-md bg-black bg-opacity-50 text-white font-bold text-xl hover:bg-main-2 transition-all duration-200 ease-in cursor-pointer">
+                                    Blue
+                                </div>
+                                <div @click="filter = 'curves=r=0.2'"
+                                    class="w-full p-4 text-center rounded-md bg-black bg-opacity-50 text-white font-bold text-xl hover:bg-main-2 transition-all duration-200 ease-in cursor-pointer">
+                                    Red
+                                </div>
+                                <div @click="filter = 'negate'"
+                                    class="w-full p-4 text-center rounded-md bg-black bg-opacity-50 text-white font-bold text-xl hover:bg-main-2 transition-all duration-200 ease-in cursor-pointer">
+                                    Negative
+                                </div>
+
+                            </div>
                         </div>
                     </template>
+
                     <template v-else-if="edit_selected == 'compress'">
                         <div>
                             compress
@@ -44,10 +70,10 @@
                         Clear
                     </div>
 
-                    <div class="w-full flex gap-4">
+                    <div class="w-full flex flex-col lg:flex-row gap-4">
                         <div class="w-full flex flex-col gap-4 items-center p-6 rounded-md bg-black bg-opacity-50">
                             <span class="text-xl font-bold text-white">Input Video</span>
-                            <VideoView class="w-[480px] h-[240px]"
+                            <VideoView class="w-[360px] h-[180px] lg:w-[480px] lg:h-[240px]"
                                 :video_data="{ ref_id: `${random_id}-input`, src: data_input.file }" />
                         </div>
                         <div class="w-full flex flex-col gap-4 items-center p-6 rounded-md bg-black bg-opacity-50">
@@ -55,7 +81,7 @@
                             <Loader v-if="loading && !data_output" />
 
                             <div v-else>
-                                <VideoView v-if="data_output" class="w-[480px] h-[240px]"
+                                <VideoView v-if="data_output" class="w-[360px] h-[180px] lg:w-[480px] lg:h-[240px]"
                                     :video_data="{ ref_id: `${random_id}-output`, src: data_output.video.url }" />
                                 <div class="w-full flex justify-center p-4 items-center">
                                     <a v-if="data_output?.video?.url" :href="data_output?.video?.url"

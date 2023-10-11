@@ -1,6 +1,7 @@
 import { Vue, Component, toNative, Watch } from 'vue-facing-decorator';
 import PreProcessFFMPEG from '../ffmpeg/ffmpeg_cmd';
 import { DataInput, DataOutputWrapper } from '../ffmpeg/preprocess_interfaces';
+import notification from '../notification';
 
 @Component
 class VideoEditMixin extends Vue {
@@ -10,6 +11,7 @@ class VideoEditMixin extends Vue {
         type: "video",
     }
     watermark?: DataInput
+    filter?: string
     data_output: DataOutputWrapper | undefined
     loading: boolean = false
     edit_selected: string = 'extract-audio'
@@ -32,7 +34,7 @@ class VideoEditMixin extends Vue {
         this.loading = true
         const ffmpeg_app = new PreProcessFFMPEG()
         this.data_input.id = `${crypto.randomUUID().replace(/-/g, '').slice(0, 12)}`
-        let data: DataOutputWrapper | undefined
+        let data: DataOutputWrapper | undefined | Error
         switch (this.edit_selected) {
             case 'extract-audio':
                 data = await ffmpeg_app.mute_video(this.data_input)
@@ -41,8 +43,16 @@ class VideoEditMixin extends Vue {
             case 'water-mark':
                 data = await ffmpeg_app.watermark_video(this.data_input, this.watermark!)
                 break
+
+            case 'filter':
+                data = await ffmpeg_app.filter_video(this.data_input, this.filter!)
+                break
         }
-        this.data_output = data
+        if (data instanceof Error) {
+            notification(data.message, 3)
+        } else {
+            this.data_output = data
+        }
         this.loading = false
     }
 
@@ -64,6 +74,7 @@ class VideoEditMixin extends Vue {
             }
         })
     }
+
     @Watch('edit_selected')
     onEditSelectedChanged(val: string, _oldVal: string) {
         setTimeout(() => {
@@ -72,9 +83,9 @@ class VideoEditMixin extends Vue {
             }
         }, 100);
     }
+
     mounted() {
         this.watch_file_input()
-
     }
 
 

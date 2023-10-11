@@ -3,6 +3,7 @@ import { fetchFile } from '@ffmpeg/util';
 import ffmpegCoreUrl from '../../../../node_modules/@ffmpeg/core/dist/esm/ffmpeg-core?url'
 import ffmpegwasmUrl from '../../../../node_modules/@ffmpeg/core/dist/esm/ffmpeg-core.wasm?url'
 import { PreProcessCommand, DataOutput, DataOutputWrapper, DataInput } from "./preprocess_interfaces";
+import notification from "../notification";
 
 export default class PreProcessFFMPEG implements PreProcessCommand {
     ffmpeg?: FFmpeg
@@ -42,7 +43,15 @@ export default class PreProcessFFMPEG implements PreProcessCommand {
         return { blob: blob, url: url, ext: file_type }
     }
 
-    public async mute_video(data: DataInput): Promise<DataOutputWrapper> {
+    private check_type(data: DataInput, msg_error?: string): Error | undefined {
+        if (data.type.includes("image/")) {
+            return new Error(msg_error)
+        }
+    }
+
+    public async mute_video(data: DataInput): Promise<DataOutputWrapper | Error> {
+        const err = this.check_type(data, "Cannot select a image for this function")
+        if (err) { return err }
         await this.load()
         const file_input = `${data.id}_input.${data.type.split('/')[1]}`
         const file_output = `${data.id}_output.${data.type.split('/')[1]}`
@@ -54,40 +63,47 @@ export default class PreProcessFFMPEG implements PreProcessCommand {
         return { video: result }
     }
 
-    public async split_video_audio(_data: DataInput): Promise<DataOutputWrapper> {
+    public async split_video_audio(data: DataInput): Promise<DataOutputWrapper | Error> {
+        const err = this.check_type(data, "Cannot select a image for this function")
+        if (err) { return err }
         const command: string[] = []
         this.ffmpeg!.exec(command)
         return { audio: undefined, video: undefined }
     }
 
-    public async watermark_video(data: DataInput, watermark: DataInput): Promise<DataOutputWrapper> {
+    public async watermark_video(data: DataInput, watermark: DataInput): Promise<DataOutputWrapper | Error> {
+        const err = this.check_type(data, "Cannot select a image for this function")
+        if (err) { return err }
         await this.load()
         const file_video_input = `${data.id}_input.${data.type.split('/')[1]}`
         const file_watermark_input = `${watermark.id}_input.${watermark.type.split('/')[1]}`
         const file_output = `${data.id}_output.${data.type.split('/')[1]}`
         await this.ffmpeg!.writeFile(file_video_input, await fetchFile(data.file))
         await this.ffmpeg!.writeFile(file_watermark_input, await fetchFile(watermark.file))
-
-        // const command: string[] = [
-        //     "-i", file_video_input,           // Input video file
-        //     "-i", file_watermark_input,       // Input watermark file
-        //     "-filter_complex", "overlay=W-w-10:H-h-10",  // Position of watermark. Here it's top right corner
-        //     "-c:a", "copy",                   // Copy audio without re-encoding
-        //     file_output                       // Output video file
-        // ];
         const command: string[] = [
-            "-i", file_video_input,           // Input video file
-            "-i", file_watermark_input,       // Input watermark file
+            "-i", file_video_input,
+            "-i", file_watermark_input,
             "-filter_complex", "[1:v]scale=100:-1[watermark];[0:v][watermark]overlay=W-w-10:H-h-10",
-            // Scale the watermark's width to 100 and maintain aspect ratio, then overlay it
-            "-c:a", "copy",                   // Copy audio without re-encoding
-            file_output                       // Output video file
+            "-c:a", "copy",
+            file_output
         ];
-
         this.ffmpeg!.exec(command)
         const result = await this.get_preprocessed(file_output, data.type)
         this.ffmpeg!.terminate
         return { video: result }
     }
 
+    public async filter_video(data: DataInput, filter: string): Promise<DataOutputWrapper | Error> {
+        const err = this.check_type(data, "Cannot select a image for this function")
+        if (err) { return err }
+        await this.load()
+        const file_input = `${data.id}_input.${data.type.split('/')[1]}`
+        const file_output = `${data.id}_output.${data.type.split('/')[1]}`
+        await this.ffmpeg!.writeFile(file_input, await fetchFile(data.file))
+        const command: string[] = ['-i', file_input, '-vf', filter, "-c:a", "copy", file_output]
+        this.ffmpeg!.exec(command)
+        const result = await this.get_preprocessed(file_output, data.type)
+        this.ffmpeg!.terminate
+        return { video: result }
+    }
 }
