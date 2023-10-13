@@ -1,4 +1,4 @@
-import { Vue, Component, toNative, Watch } from 'vue-facing-decorator';
+import { Vue, Component, toNative } from 'vue-facing-decorator';
 import PreProcessFFMPEG from '../ffmpeg/ffmpeg_cmd';
 import { DataInput, DataOutputWrapper } from '../ffmpeg/preprocess_interfaces';
 import notification from '../notification';
