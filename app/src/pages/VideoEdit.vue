@@ -3,10 +3,14 @@
         <Pattern>
             <div class="w-full h-full p-4">
                 <div class="flex flex-col gap-8">
-                    <div class="w-fit">
-                        <label for="video-input" class="block text-sm text-white">Video</label>
+
+                    <div class="form-control w-full max-w-xs">
+                        <label class="label">
+                            <span class="label-text">Select a Video Input</span>
+                            <span class="label-text-alt">*</span>
+                        </label>
                         <input id="video-input" type="file"
-                            class="block w-full px-3 py-2 mt-2 text-sm border border-main-2 rounded-lg file:text-sm file:text-white file:px-4 file:py-1 file:border-none file:rounded-full file:bg-main-2 file:bg-opacity-20   text-white" />
+                            class="file-input file-input-bordered w-full max-w-xs bg-black bg-opacity-50" />
                     </div>
 
                     <ToolBarVideoEdit @video_editing_action="video_editing_action_handler" :edit_selected="edit_selected" />
@@ -25,7 +29,7 @@
 
                     <template v-else-if="edit_selected == 'filter'">
                         <div>
-                            <div class="w-full grid grid-cols-4 items-center p-2 gap-4">
+                            <div class="w-full grid grid-cols-1 lg:grid-cols-4 items-center p-2 gap-4">
 
                                 <div @click="filter = 'hue=s=0'"
                                     class="w-full p-4 text-center rounded-md bg-black bg-opacity-50 text-white font-bold text-xl hover:bg-main-2 transition-all duration-200 ease-in cursor-pointer">
@@ -54,7 +58,96 @@
 
                     <template v-else-if="edit_selected == 'compress'">
                         <div>
-                            compress
+                            <div class="grid grid-cols-2 lg:grid-cols-4">
+                                <div class="form-control w-full max-w-xs">
+                                    <label class="label">
+                                        <span class="label-text">Codec Video</span>
+                                        <span class="label-text-alt">*</span>
+                                    </label>
+                                    <select v-model="data_input.opts_video.codec"
+                                        class="select select-bordered bg-black bg-opacity-50">
+                                        <option value="h264" selected>H264</option>
+                                        <option value="hevc" selected>H265/HEVC</option>
+                                        <option value="hnm4video" selected>hnm4video</option>
+                                        <option value="mpeg1video" selected>mpeg1video</option>
+                                        <option value="mpeg4" selected>mpeg4</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-control w-full max-w-xs">
+                                    <label class="label">
+                                        <span class="label-text">Codec Audio</span>
+                                        <span class="label-text-alt">*disabled</span>
+                                    </label>
+                                    <select v-model="data_input.opts_audio.codec" disabled
+                                        class="select select-bordered bg-black bg-opacity-50">
+                                        <option value="" selected>H256</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-control w-full max-w-xs">
+                                    <label class="label">
+                                        <span class="label-text">Resolution</span>
+                                        <span class="label-text-alt">*</span>
+                                    </label>
+                                    <select v-model="data_input.opts_video.resolution"
+                                        class="select select-bordered bg-black bg-opacity-50">
+                                        <option value="1280x720" selected>720p - HD (1280X720)</option>
+                                        <option value="854x480">480p - SD (854X480)</option>
+                                        <option value="640x360">360p - SD (640X360)</option>
+                                    </select>
+                                </div>
+
+                                <div class="w-full lg:w-3/4">
+                                    <label class="label">
+                                        <span class="label-text">Bit Rate Video</span>
+                                        <span class="label-text-alt">{{ data_input.opts_video.bitrate }}kbps</span>
+                                    </label>
+                                    <input v-model="data_input.opts_video.bitrate" type="range" min="150" max="50000"
+                                        class="range range-sm" step="50" />
+                                    <div class="w-full flex justify-between text-xs px-2">
+                                        <span>|</span>
+                                        <span>|</span>
+                                        <span>|</span>
+                                        <span>|</span>
+                                        <span>|</span>
+                                    </div>
+                                </div>
+                                <div class="w-full lg:w-3/4">
+                                    <label class="label">
+                                        <span class="label-text">Bit Rate Audio</span>
+                                        <span class="label-text-alt">*disabled {{ data_input.opts_audio.bitrate
+                                        }}kbps</span>
+                                    </label>
+                                    <input disabled v-model="data_input.opts_audio.bitrate" type="range" min="150" max="320"
+                                        class="range range-sm" step="50" />
+                                    <div class="w-full flex justify-between text-xs px-2">
+                                        <span>|</span>
+                                        <span>|</span>
+                                        <span>|</span>
+                                        <span>|</span>
+                                        <span>|</span>
+                                    </div>
+                                </div>
+
+                                <div class="w-full lg:w-3/4">
+                                    <label class="label">
+                                        <span class="label-text">Frame Rate</span>
+                                        <span class="label-text-alt">{{ data_input.opts_video.framerate }}fps</span>
+                                    </label>
+                                    <input v-model="data_input.opts_video.framerate" type="range" min="5" max="120"
+                                        class="range range-sm" step="5" />
+                                    <div class="w-full flex justify-between text-xs px-2">
+                                        <span>|</span>
+                                        <span>|</span>
+                                        <span>|</span>
+                                        <span>|</span>
+                                        <span>|</span>
+                                    </div>
+                                </div>
+
+
+                            </div>
                         </div>
                     </template>
 
@@ -73,7 +166,7 @@
                     <div class="w-full flex flex-col lg:flex-row gap-4">
                         <div class="w-full flex flex-col gap-4 items-center p-6 rounded-md bg-black bg-opacity-50">
                             <span class="text-xl font-bold text-white">Input Video</span>
-                            <VideoView class="w-[360px] h-[180px] lg:w-[480px] lg:h-[240px]"
+                            <VideoView class="w-[240px] h-[180px] lg:w-[480px] lg:h-[240px]"
                                 :video_data="{ ref_id: `${random_id}-input`, src: data_input.file }" />
                         </div>
                         <div class="w-full flex flex-col gap-4 items-center p-6 rounded-md bg-black bg-opacity-50">
@@ -81,7 +174,7 @@
                             <Loader v-if="loading && !data_output" />
 
                             <div v-else>
-                                <VideoView v-if="data_output" class="w-[360px] h-[180px] lg:w-[480px] lg:h-[240px]"
+                                <VideoView v-if="data_output" class="w-[240px] h-[180px] lg:w-[480px] lg:h-[240px]"
                                     :video_data="{ ref_id: `${random_id}-output`, src: data_output.video.url }" />
                                 <div class="w-full flex justify-center p-4 items-center">
                                     <a v-if="data_output?.video?.url" :href="data_output?.video?.url"

@@ -9,6 +9,18 @@ class VideoEditMixin extends Vue {
         id: '',
         file: undefined,
         type: "video",
+        opts_video: {
+            codec: 'h264',
+            bitrate: 1000,
+            resolution: '1280x720',
+            framerate: 30
+        },
+        opts_audio: {
+            bitrate: undefined,
+            codec: undefined,
+            samplerate: undefined,
+            channels: undefined
+        }
     }
     watermark?: DataInput
     filter?: string
@@ -46,6 +58,10 @@ class VideoEditMixin extends Vue {
 
             case 'filter':
                 data = await ffmpeg_app.filter_video(this.data_input, this.filter!)
+                break
+            
+            case 'compress':
+                data = await ffmpeg_app.compress_video(this.data_input)
                 break
         }
         if (data instanceof Error) {

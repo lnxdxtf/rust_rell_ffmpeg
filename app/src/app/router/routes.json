@@ -34,5 +34,17 @@
         "sidebar_name": "Image Editing",
         "icon": "fa-solid fa-camera",
         "category": "tool"
+    },
+    {
+        "path": "/dev",
+        "name": "Dev",
+        "auth": false,
+        "import_path": "",
+        "component": "Dev",
+        "dynamic": false,
+        "meta": {},
+        "sidebar_name": "Terminal",
+        "icon": "fa-solid fa-terminal",
+        "category": "tool"
     }
 ]

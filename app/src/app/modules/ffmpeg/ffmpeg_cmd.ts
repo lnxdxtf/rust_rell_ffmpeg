@@ -59,7 +59,7 @@ export default class PreProcessFFMPEG implements PreProcessCommand {
         const command: string[] = ['-i', file_input, '-an', file_output]
         this.ffmpeg!.exec(command)
         const result = await this.get_preprocessed(file_output, data.type)
-        this.ffmpeg!.terminate
+        this.ffmpeg!.terminate()
         return { video: result }
     }
 
@@ -89,7 +89,7 @@ export default class PreProcessFFMPEG implements PreProcessCommand {
         ];
         this.ffmpeg!.exec(command)
         const result = await this.get_preprocessed(file_output, data.type)
-        this.ffmpeg!.terminate
+        this.ffmpeg!.terminate()
         return { video: result }
     }
 
@@ -103,12 +103,50 @@ export default class PreProcessFFMPEG implements PreProcessCommand {
         const command: string[] = ['-i', file_input, '-vf', filter, "-c:a", "copy", file_output]
         this.ffmpeg!.exec(command)
         const result = await this.get_preprocessed(file_output, data.type)
-        this.ffmpeg!.terminate
+        this.ffmpeg!.terminate()
         return { video: result }
     }
 
-    public async compress_video(_data: DataInput): Promise<DataOutputWrapper | Error> {
-        // todo!()
-        return { video: undefined }
+    public async compress_video(data: DataInput): Promise<DataOutputWrapper | Error> {
+        await this.load()
+        const file_input = `${data.id}_input.${data.type.split('/')[1]}`
+        const file_output = `${data.id}_output.${data.type.split('/')[1]}`
+        await this.ffmpeg!.writeFile(file_input, await fetchFile(data.file))
+        let command: string[] = ['-i', file_input]
+        if (data.opts_video) {
+            if (data.opts_video.codec) {
+                command.push("-vcodec", data.opts_video.codec)
+            }
+            if (data.opts_video.bitrate) {
+                command.push("-b:v", `${data.opts_video.bitrate}k`)
+            }
+            if (data.opts_video.resolution) {
+                command.push("-s", data.opts_video.resolution)
+            }
+            if (data.opts_video.framerate) {
+                command.push("-r", `${data.opts_video.framerate}`)
+            }
+        }
+        command.push(file_output)
+        await this.ffmpeg!.exec(command)
+        const result = await this.get_preprocessed(file_output, data.type)
+        this.ffmpeg!.terminate()
+        return { video: result }
+    }
+
+    public async exec_command_dev(cmd: string[], data: DataInput): Promise<any> {
+        await this.load()
+        const file_input = `${data!.id}_input.${data!.type.split('/')[1]}`
+        const file_output = `${data!.id}_output.${data!.type.split('/')[1]}`
+        await this.ffmpeg!.writeFile(file_input, await fetchFile(data!.file))
+        let commands: string[] = []
+        if (data.file) {
+            commands.push("-i", file_input)
+        }
+        commands.push(...cmd)
+        await this.ffmpeg!.exec(commands)
+        const result = await this.get_preprocessed(file_output, data.type)
+        this.ffmpeg!.terminate()
+        return { video: result }
     }
 }

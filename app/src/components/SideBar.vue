@@ -6,7 +6,7 @@
         </div>
         <aside v-if="show_menu"
             class="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto border-r border-main-3 border-opacity-50 text-white">
-            <a @click="$router.push('/'), show_menu = false"
+            <a @click="$router.push('/'), isMobile ? show_menu = false : null"
                 class="w-full flex items-center cursor-pointer p-2 border text-3xl border-main-2">
                 <!-- <img class="w-12" :src="img_logo"> -->
                 <i class="fa-brands fa-rust text-orange-700"></i>
@@ -19,7 +19,7 @@
                         <label class="px-3 text-xs uppercase text-gray-400">Tools</label>
 
                         <a v-for="toolRoute in routes.filter(r => r.category == 'tool')" :key="toolRoute.name"
-                            @click="$router.push(toolRoute.path), show_menu = false"
+                            @click="$router.push(toolRoute.path), isMobile ? show_menu = false : null"
                             class="cursor-pointer flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <i :class="toolRoute.icon"></i>
 
@@ -31,14 +31,14 @@
                     <div class="space-y-3 ">
                         <label class="px-3 text-xs uppercase text-gray-400">Services</label>
 
-                        <a @click="$router.push('/'), show_menu = false"
+                        <a @click="$router.push('/'), isMobile ? show_menu = false : null"
                             class="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <i class="fa-solid fa-database"></i>
 
                             <span class="mx-2 text-sm font-medium">Midia Storage</span>
                         </a>
 
-                        <a @click="$router.push('/'), show_menu = false"
+                        <a @click="$router.push('/'), isMobile ? show_menu = false : null"
                             class="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -49,7 +49,7 @@
                             <span class="mx-2 text-sm font-medium">Hotspots</span>
                         </a>
 
-                        <a @click="$router.push('/'), show_menu = false"
+                        <a @click="$router.push('/'), isMobile ? show_menu = false : null"
                             class="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -64,7 +64,7 @@
                     <div class="space-y-3 ">
                         <label class="px-3 text-xs uppercase text-gray-400">Account</label>
 
-                        <a @click="$router.push('/'), show_menu = false"
+                        <a @click="$router.push('/'), isMobile ? show_menu = false : null"
                             class="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -75,7 +75,7 @@
                             <span class="mx-2 text-sm font-medium">Login</span>
                         </a>
 
-                        <a @click="$router.push('/'), show_menu = false"
+                        <a @click="$router.push('/'), isMobile ? show_menu = false : null"
                             class="flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg hover:bg-black hover:bg-opacity-30">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
