@@ -21,7 +21,7 @@
         
         - name: Install dependencies and build
           run: |
-            
+            sudo apt-get install protobuf-compiler
             cd ./app
             bun install
             bun run wasm
