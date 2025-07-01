@@ -9,9 +9,6 @@
     pages: write
     id-token: write
     
-  concurrency:
-    group: 'pages'
-    cancel-in-progress: true
 
   jobs:
     my-job:
@@ -24,20 +21,14 @@
         
         - name: Install dependencies and build
           run: |
-            sudo apt-get install protobuf-compiler
+            
             cd ./app
             bun install
             bun run wasm
             bun run build
         
-        - name: Setup Pages
-          uses: actions/configure-pages@v3
-        - name: Upload artifact
-          uses: actions/upload-pages-artifact@v1
+        - name: Deploy
+          uses: JamesIves/github-pages-deploy-action@v4
           with:
-            # Upload dist repository
-            path: './app/dist'
-        - name: Deploy to GitHub Pages
-          id: deployment
-          uses: actions/deploy-pages@v1
-        
+            folder: ./app/dist
+            branch: pre-release/dist
