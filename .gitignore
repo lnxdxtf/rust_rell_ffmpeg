@@ -1,7 +1,0 @@
-**/.env
-**/target
-**/pkg
-**/Cargo.lock
-**/node_modules
-**/bun_lockb
-**/package-lock.json
