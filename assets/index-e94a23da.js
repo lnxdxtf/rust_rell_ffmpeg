@@ -7893,7 +7893,7 @@ const Base = class {
   }
 };
 const Vue = Base;
-const img_rust_reel = "/rust_reel-grpc/assets/rust-reel-5d9b7c9d.jpeg";
+const img_rust_reel = "/rust_rell_ffmpeg/assets/rust-reel-5d9b7c9d.jpeg";
 const routes = [
   {
     path: "/",
@@ -9146,7 +9146,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
 const AppComponent = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render]]);
 const scriptRel = "modulepreload";
 const assetsURL = function(dep) {
-  return "/rust_reel-grpc/" + dep;
+  return "/rust_rell_ffmpeg/" + dep;
 };
 const seen = {};
 const __vitePreload = function preload(baseModule, deps, importerUrl) {
@@ -11062,7 +11062,7 @@ function extractChangingRecords(to, from) {
 }
 function LazyLoaderPage(pageName, import_path) {
   if (import_path == "" || import_path == void 0) {
-    return () => __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "../../pages/Dev.vue": () => __vitePreload(() => import("./Dev-9c6c3f3c.js"), true ? ["assets/Dev-9c6c3f3c.js","assets/Pattern-533c87bf.js","assets/notification-8f626aa3.js"] : void 0), "../../pages/Home.vue": () => __vitePreload(() => import("./Home-cc08efec.js"), true ? ["assets/Home-cc08efec.js","assets/Pattern-533c87bf.js"] : void 0), "../../pages/ImageEdit.vue": () => __vitePreload(() => import("./ImageEdit-9774c961.js"), true ? ["assets/ImageEdit-9774c961.js","assets/Pattern-533c87bf.js"] : void 0), "../../pages/Pattern.vue": () => __vitePreload(() => import("./Pattern-533c87bf.js"), true ? [] : void 0), "../../pages/VideoEdit.vue": () => __vitePreload(() => import("./VideoEdit-a685f886.js"), true ? ["assets/VideoEdit-a685f886.js","assets/notification-8f626aa3.js","assets/Pattern-533c87bf.js","assets/VideoEdit-9c971338.css"] : void 0) }), `../../pages/${pageName}.vue`);
+    return () => __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "../../pages/Dev.vue": () => __vitePreload(() => import("./Dev-a1d941cf.js"), true ? ["assets/Dev-a1d941cf.js","assets/Pattern-2682f34c.js","assets/notification-cb8380df.js"] : void 0), "../../pages/Home.vue": () => __vitePreload(() => import("./Home-452274ae.js"), true ? ["assets/Home-452274ae.js","assets/Pattern-2682f34c.js"] : void 0), "../../pages/ImageEdit.vue": () => __vitePreload(() => import("./ImageEdit-6179fa3b.js"), true ? ["assets/ImageEdit-6179fa3b.js","assets/Pattern-2682f34c.js"] : void 0), "../../pages/Pattern.vue": () => __vitePreload(() => import("./Pattern-2682f34c.js"), true ? [] : void 0), "../../pages/VideoEdit.vue": () => __vitePreload(() => import("./VideoEdit-d768a5a2.js"), true ? ["assets/VideoEdit-d768a5a2.js","assets/notification-cb8380df.js","assets/Pattern-2682f34c.js","assets/VideoEdit-9c971338.css"] : void 0) }), `../../pages/${pageName}.vue`);
   }
   return () => __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({}), `../../pages/${import_path}/${pageName}.vue`);
 }

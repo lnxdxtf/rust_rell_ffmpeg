@@ -23,7 +23,7 @@ var __privateSet = (obj, member, value, setter) => {
   return value;
 };
 var _worker, _resolves, _rejects, _logEventCallbacks, _progressEventCallbacks, _registerHandlers, _send;
-import { u as useToast } from "./index-4fdaac4f.js";
+import { u as useToast } from "./index-e94a23da.js";
 var FFMessageType;
 (function(FFMessageType2) {
   FFMessageType2["LOAD"] = "LOAD";
@@ -131,7 +131,7 @@ class FFmpeg {
         }) : (
           // We need to duplicated the code here to enable webpack
           // to bundle worekr.js here.
-          new Worker(new URL("/rust_reel-grpc/assets/worker-75c22df8.js", self.location), {
+          new Worker(new URL("/rust_rell_ffmpeg/assets/worker-75c22df8.js", self.location), {
             type: "module"
           })
         ));
@@ -368,8 +368,8 @@ const fetchFile = async (file) => {
   }
   return new Uint8Array(data);
 };
-const ffmpegCoreUrl = "/rust_reel-grpc/assets/ffmpeg-core-67a48f11.js";
-const ffmpegwasmUrl = "/rust_reel-grpc/assets/ffmpeg-core-9f57947a.wasm";
+const ffmpegCoreUrl = "/rust_rell_ffmpeg/assets/ffmpeg-core-67a48f11.js";
+const ffmpegwasmUrl = "/rust_rell_ffmpeg/assets/ffmpeg-core-9f57947a.wasm";
 class PreProcessFFMPEG {
   constructor() {
     __publicField(this, "ffmpeg");
