@@ -8,16 +8,27 @@
     build_and_deploy:
       name: build-app
       runs-on: ubuntu-latest
+
+      strategy:
+        matrix:
+          os: [ubuntu-latest]
+          node-version: [22.x]
+
+      concurrency: ci-${{github.ref}}
+
       steps:
         - uses: actions/checkout@v3
         
-        - uses: oven-sh/setup-bun@v1
-        
-        - name: Install dependencies and build
-          run: |
-            cd ./app
-            bun install
-            bun run build
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v2
+          with:
+              node-version: ${{ matrix.node-version }}
+
+        - name: Install Deps
+          run: npm install
+
+        - name: Build
+          run: npm run build
         
         - name: Deploy
           uses: JamesIves/github-pages-deploy-action@v4
