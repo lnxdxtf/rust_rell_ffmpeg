@@ -1,4 +1,5 @@
-import { t as toNative, V as Vue, C as Component, _ as _export_sfc, c as createElementBlock, b as createBaseVNode, p as renderSlot, o as openBlock } from "./index-e94a23da.js";
+import { t as toNative, V as Vue, C as Component, _ as _export_sfc, c as createElementBlock, a as createVNode, r as resolveComponent, o as openBlock } from "./index-ea9c15d2.js";
+import Pattern from "./Pattern-8ae1f3f2.js";
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __decorateClass = (decorators, target, key, kind) => {
@@ -10,21 +11,21 @@ var __decorateClass = (decorators, target, key, kind) => {
     __defProp(target, key, result);
   return result;
 };
-let Pattern$1 = class Pattern extends Vue {
+let ImageEdit$1 = class ImageEdit extends Vue {
 };
-Pattern$1 = __decorateClass([
-  Component({})
-], Pattern$1);
-const _sfc_main = toNative(Pattern$1);
-const _hoisted_1 = { class: "p-4 rounded-md w-full h-full" };
+ImageEdit$1 = __decorateClass([
+  Component({
+    components: { Pattern }
+  })
+], ImageEdit$1);
+const _sfc_main = toNative(ImageEdit$1);
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_Pattern = resolveComponent("Pattern");
   return openBlock(), createElementBlock("div", null, [
-    createBaseVNode("div", _hoisted_1, [
-      renderSlot(_ctx.$slots, "default")
-    ])
+    createVNode(_component_Pattern)
   ]);
 }
-const Pattern2 = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render]]);
+const ImageEdit2 = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render]]);
 export {
-  Pattern2 as default
+  ImageEdit2 as default
 };
