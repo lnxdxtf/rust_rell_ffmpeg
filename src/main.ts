@@ -6,6 +6,10 @@ import store from './app/store/store'
 import "vue-toastification/dist/index.css";
 import Toast, { POSITION } from "vue-toastification";
 
+import 'video.js/dist/video-js.min.css';
+import 'video.js/dist/video';
+// @ts-ignore
+import videojs from 'video.js'
 
 function main() {
     const app: App<Element> = createApp(AppComponent)
