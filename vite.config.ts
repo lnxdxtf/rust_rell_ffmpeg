@@ -4,7 +4,7 @@ import * as path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/rust_reel-grpc/',
+  base: '/rust_rell_ffmpeg/',
   build: { minify: false },
   plugins: [vue()],
   envPrefix: ['VITE_'],
