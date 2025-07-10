@@ -23,4 +23,4 @@
           uses: JamesIves/github-pages-deploy-action@v4
           with:
             folder: ./app/dist
-            branch: pre-release/dist
+            branch: release/dist
