@@ -13,6 +13,9 @@ export default defineConfig({
     },
   },
   compilation: {
+    output: {
+      publicPath: process.env.PUBLIC_PATH || '/',
+    },
     define: {
       __VUE_OPTIONS_API__: true,
       __VUE_PROD_DEVTOOLS__: false,
