@@ -1,19 +1,25 @@
 <template>
   <div id="noir-app">
-    <router-view v-slot="{ Component }">
-      <transition name="page" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <HexBackground />
+    <div class="relative" style="z-index: 1">
+      <router-view v-slot="{ Component }">
+        <transition name="page" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Base, Component as Register, toNative } from 'vue-facing-decorator';
+import HexBackground from '@/components/hero/HexBackground.vue';
 
 class App extends Base {}
 Register(App);
-export default toNative(App);
+const Page = toNative(App);
+Page.components = { HexBackground };
+export default Page;
 </script>
 
 <style>

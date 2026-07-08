@@ -1,8 +1,6 @@
 <template>
   <div>
-    <HexBackground />
-
-    <div class="relative min-h-screen overflow-x-hidden" style="z-index: 1">
+    <div class="relative min-h-screen overflow-x-hidden">
       <header class="pt-8 px-6">
         <router-link to="/" class="font-display text-xl font-black text-gradient-wine tracking-tight no-underline">
           RELL
@@ -28,7 +26,7 @@
       </div>
     </div>
 
-    <section ref="featuresSection" class="relative px-6 py-24 border-t border-wine-700/30" style="z-index: 1; background: #0a0a12">
+    <section ref="featuresSection" class="relative px-6 py-24 border-t border-wine-700/30 bg-deep" style="z-index: 1; >
       <div class="max-w-6xl mx-auto">
         <h2 ref="featuresTitle" class="font-display text-3xl md:text-4xl font-bold text-primary text-center mb-16">
           O que o <span class="text-gradient-wine">Rell FFmpeg</span> faz
@@ -112,7 +110,6 @@
 
 <script lang="ts">
 import { Base, Component as Register, toNative } from 'vue-facing-decorator';
-import HexBackground from '@/components/hero/HexBackground.vue';
 
 class HeroPage extends Base {
   cards = [
@@ -184,7 +181,5 @@ class HeroPage extends Base {
 }
 
 Register(HeroPage);
-const Page = toNative(HeroPage);
-Page.components = { HexBackground };
-export default Page;
+export default toNative(HeroPage);
 </script>
