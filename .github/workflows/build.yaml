@@ -23,7 +23,9 @@ jobs:
         run: bun install
 
       - name: Build
-        run: PUBLIC_PATH=/rust_rell_ffmpeg/ bun run build
+        run: bun run build
+        env:
+          PUBLIC_PATH: /rust_rell_ffmpeg/
 
       - name: Deploy to release/dist
         uses: JamesIves/github-pages-deploy-action@v4
