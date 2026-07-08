@@ -7,7 +7,7 @@
           v-for="ef in videoEffects"
           :key="ef.name"
           :label="ef.label"
-          :active="selectedOp === ef.op"
+          :active="selOp === ef.op"
           @select="$emit('select-effect', ef.op)"
         />
       </div>
@@ -20,7 +20,7 @@
           v-for="ef in imageEffects"
           :key="ef.name"
           :label="ef.label"
-          :active="selectedOp === ef.op"
+          :active="selOp === ef.op"
           @select="$emit('select-effect', ef.op)"
         />
       </div>
@@ -33,7 +33,7 @@ import { Base, Component as Register, toNative } from 'vue-facing-decorator';
 import type { VideoOperation, ImageOperation, Operation } from '@/types/editor';
 
 class EffectList extends Base {
-  get selectedOp(): Operation | null {
+  get selOp(): Operation | null {
     return (this as any).selectedOp;
   }
 
