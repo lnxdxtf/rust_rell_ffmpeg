@@ -41,7 +41,7 @@ export class FFmpegService {
     await this.ff.load({
       coreURL: await toBlobURL(`${coreBase}/ffmpeg-core.js`, 'text/javascript'),
       wasmURL: await toBlobURL(`${coreBase}/ffmpeg-core.wasm`, 'application/wasm'),
-      classWorkerURL: '/ffmpeg/worker.js',
+      classWorkerURL: './ffmpeg/worker.js',
     });
     this.loaded = true;
   }
