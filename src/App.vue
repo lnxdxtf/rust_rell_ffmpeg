@@ -1,24 +1,28 @@
 <template>
-  <div>
-    <div class="w-screen h-screen bg-gradient-to-tr from-bg-1 to-bg-2 flex overflow-hidden hidden-scroll">
-      <SideBar class="w-fit h-full" />
-      <div class="w-full h-full block">
-        <TopBar />
-        <router-view v-slot="{ Component }">
-          <component :is="Component" class="w-full h-[95vh] animate__animated animate__fadeIn overflow-y-auto" />
-        </router-view>
-      </div>
-    </div>
+  <div id="noir-app">
+    <router-view v-slot="{ Component }">
+      <transition name="page" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, toNative } from 'vue-facing-decorator';
-import SideBar from './components/SideBar.vue';
-import TopBar from './components/TopBar.vue';
-@Component({
-  components: { SideBar, TopBar }
-})
-class App extends Vue { }
+import { Base, Component as Register, toNative } from 'vue-facing-decorator';
+
+class App extends Base {}
+Register(App);
 export default toNative(App);
 </script>
+
+<style>
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.3s ease;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+</style>

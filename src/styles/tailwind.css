@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-deep: #050508;
+  --color-surface: #0d0d14;
+  --color-elevated: #16161f;
+  --color-wine-900: #1a0505;
+  --color-wine-700: #3d0c11;
+  --color-wine-500: #7a1a2a;
+  --color-wine-300: #b83045;
+  --color-wine-100: #e8506a;
+  --color-gold-800: #2a1f0a;
+  --color-gold-600: #5c4416;
+  --color-gold-400: #8c6a2a;
+  --color-gold-200: #c9a03c;
+  --color-gold-50: #f0d680;
+  --color-primary: #e8e4f0;
+  --color-secondary: #78708a;
+  --color-muted: #404055;
+
+  --font-display: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  *, *::before, *::after {
+    border-color: var(--color-wine-700);
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+@utility text-gradient-wine {
+  background: linear-gradient(135deg, var(--color-wine-300), var(--color-gold-200));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility glow-wine {
+  box-shadow: 0 0 20px rgb(122 26 42 / 0.4), 0 0 60px rgb(122 26 42 / 0.2);
+}
+
+@utility glow-gold {
+  box-shadow: 0 0 20px rgb(140 106 42 / 0.4), 0 0 60px rgb(140 106 42 / 0.2);
+}
+
+@utility glass {
+  background: rgb(13 13 20 / 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(61 12 17 / 0.5);
+}
+
+@utility gradient-sky {
+  background: linear-gradient(180deg, #050510 0%, #1a0508 30%, #2a1508 60%, #050510 100%);
+}

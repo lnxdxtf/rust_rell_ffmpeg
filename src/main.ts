@@ -1,35 +1,23 @@
-import { App, createApp } from 'vue'
-import './style.css'
-import AppComponent from './App.vue'
-import router from './app/router/router'
-import store from './app/store/store'
-import "vue-toastification/dist/index.css";
-import Toast, { POSITION } from "vue-toastification";
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import './styles/tailwind.css';
 
-import 'video.js/dist/video-js.min.css';
-import 'video.js/dist/video';
-// @ts-ignore
-import videojs from 'video.js'
+import DropZone from '@/components/editor/DropZone.vue';
+import PreviewPanel from '@/components/editor/PreviewPanel.vue';
+import EffectList from '@/components/editor/EffectList.vue';
+import EffectItem from '@/components/editor/EffectItem.vue';
+import DownloadButton from '@/components/editor/DownloadButton.vue';
 
-function main() {
-    const app: App<Element> = createApp(AppComponent)
-    settings(app)
-    app.mount('#app')
-}
+const app = createApp(App);
+app.use(router);
+app.use(store);
 
-function settings(app: App<Element>) {
-    app.use(router)
-    app.use(store)
-    app.use(Toast, {
-        position: POSITION.TOP_RIGHT,
-        timeout: 4000,
-        transition: "Vue-Toastification__slideBlurred",
-    })
-    setListeners()
-}
+app.component('DropZone', DropZone);
+app.component('PreviewPanel', PreviewPanel);
+app.component('EffectList', EffectList);
+app.component('EffectItem', EffectItem);
+app.component('DownloadButton', DownloadButton);
 
-function setListeners() {
-    window.addEventListener("resize", () => { store.commit("SET_ISMOBILE", document.body.offsetWidth < 1024) })
-}
-
-main()
+app.mount('#app');
